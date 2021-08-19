@@ -10,6 +10,38 @@
 
 <body>
 
+    <?php if (!empty($pageno) or $_GET['pageno'] > 1) {
+        $pageno = sanitize_text_field($_GET['pageno']);
+    } else {
+        $pageno = 1;
+    }
+
+    $meta_query = array(
+        array(
+            'key'     => 'SKI',
+            'compare' => 'EXISTS',
+        ),
+    );
+
+    $items = new WP_Query(
+        array(
+            'post_type' => 'vaultitems',
+            'post_status' => 'any',
+            //'author' => $user_id,
+            'author' => 'any',
+            'posts_per_page' => $posts_per_page,
+            'paged' => $pageno,
+            'meta_query' => $meta_query,
+            // 'tax_query' => array(
+            //     'relation' => 'OR',
+            //     array(),
+            // ),
+        )
+    );
+
+
+    ?>
+
 </body>
 
 </html>
