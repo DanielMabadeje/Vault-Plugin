@@ -21,9 +21,14 @@ class UserRegistration
         return $output;
     }
 
-    public function addUser()
+    public function addUser($data)
     {
-        # code...
+        $user_id = email_exists($username);
+        if (!$user_id) {
+            $user_id = wp_create_user($username, $password, $username);
+        } else {
+            $error = __('User already exists.  Password inherited.');
+        }
     }
     public function generateSKI()
     {
