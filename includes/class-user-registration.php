@@ -4,9 +4,10 @@ class UserRegistration
 {
 
     private $uniqueSKI;
-    public function __construct()
+    public function __construct($uniqueSKI)
     {
-        add_shortcode('vault_user_registration', array($this, 'showRegistrationForm'));
+        add_action('register_form', 'crf_registration_form');
+        // add_shortcode('vault_user_registration', array($this, 'showRegistrationForm'));
         $this->uniqueSKI = $uniqueSKI;
     }
 
@@ -23,9 +24,11 @@ class UserRegistration
 
     public function addUser($data)
     {
-        $user_id = email_exists($username);
+        $user_id = email_exists($data['email']);
         if (!$user_id) {
-            $user_id = wp_create_user($username, $password, $username);
+            $user_id = wp_create_user($data['email'], $data['password'], $data['email']);
+            $this->generateSKI();
+            $this->crf_user_register($user_id, "SKI", $this->uniqueSKI);
         } else {
             $error = __('User already exists.  Password inherited.');
         }
@@ -52,11 +55,54 @@ class UserRegistration
     public function validateSKI($ski)
     {
 
+        // $ski=esc_html( get_the_author_meta( 'year_of_birth', $user->ID ) )
 
-        if (condition) {
-            return true;
-        } else {
-            return false;
+        // if (condition) {
+        //     return true;
+        // } else {
+        //     return false;
+        // }
+
+        return false;
+    }
+
+    public function crf_user_register($user_id, $key, $value)
+    {
+        if (!empty($key)) {
+            update_user_meta($user_id, $key, $value);
         }
+    }
+
+    public function crf_registration_form()
+    {
+
+        $year = !empty($_POST['year_of_birth']) ? intval($_POST['year_of_birth']) : '';
+
+?>
+
+        <p>
+            <label for="year_of_birth"><?php esc_html_e('Phone', 'crf') ?><br />
+                <input type="number" min="1900" max="2017" step="1" id="year_of_birth" name="year_of_birth" value="<?php echo esc_attr($year); ?>" class="input" />
+            </label>
+        </p>
+
+        <p>
+            <label for="address"><?php esc_html_e('Address', 'crf') ?><br />
+                <input type="text" id="address" name="address" value="" class="input" />
+            </label>
+        </p>
+
+        <p>
+            <label for="year_of_birth"><?php esc_html_e('Country', 'crf') ?><br />
+                <input type="number" min="1900" max="2017" step="1" id="year_of_birth" name="year_of_birth" value="<?php echo esc_attr($year); ?>" class="input" />
+            </label>
+        </p>
+
+        <p>
+            <label for="year_of_birth"><?php esc_html_e('State', 'crf') ?><br />
+                <input type="number" min="1900" max="2017" step="1" id="year_of_birth" name="year_of_birth" value="<?php echo esc_attr($year); ?>" class="input" />
+            </label>
+        </p>
+<?php
     }
 }

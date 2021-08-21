@@ -9,6 +9,6 @@ class AddItem
 
     public function addItem(array $data)
     {
-        wp_insert_post( array $data );
+        // wp_insert_post( array $data);
     }
 }
