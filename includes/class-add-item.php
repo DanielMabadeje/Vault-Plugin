@@ -13,7 +13,7 @@ class AddItem
         ob_start();
 
         // include plugin_dir_path( dirname( __FILE__ ) ) . 'public/layouts/design-transfer-wallet-to-wallet.php';
-        include plugin_dir_path(__FILE__) . 'layouts/user-registration.php';
+        include plugin_dir_path(__FILE__) . 'layouts/admin/add-items.php';
          
         $output = ob_get_clean();
   
