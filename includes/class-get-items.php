@@ -14,6 +14,12 @@ class GetItems
 
     public function showGetItems()
     {
-        # code...
+        ob_start();
+
+        include plugin_dir_path(__FILE__) . 'layouts/get-items.php';
+
+        $output = ob_get_clean();
+
+        return $output;
     }
 }
