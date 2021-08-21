@@ -54,19 +54,20 @@ class AddItem
     {
 
         $user_info = get_user_by('ID', $user_id);
+        $status='pending';
         $new_txn_args = array(
             'post_author'=> $user_info->ID,
-            'post_type' => 'rimplenettransaction',
-            'post_title'    => wp_strip_all_tags($post_title),
-            'post_content'  => $post_content,
+            'post_type' => 'vaultitems',
+            'post_title'    => wp_strip_all_tags($data['item']),
+            'post_content'  => $data['description'],
             'post_status'   => $status,
             'meta_input' => array(
-              'amount'=>$amount,
-              'currency'=>strtolower($wallet_id),
-              'txn_type'=>$tnx_type
+                'skr'=>$data['skr'],
+                'item_type'=>$data['item_type'],
+                'duration'=>$data['duration'],
               ),
             );
-        // wp_insert_post( array $data);
+        wp_insert_post($new_txn_args);
 
         wp_reset_postdata();
     }
