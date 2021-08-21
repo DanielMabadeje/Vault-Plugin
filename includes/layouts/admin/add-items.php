@@ -20,20 +20,16 @@ $user_id = $atts['user_id'];
 
 if (wp_verify_nonce($_POST['vault_add_item_nonce'], 'vault_add_item_nonce')) {
 
-    // $wallet_id = sanitize_text_field($_POST["rimplenet_wallet"]);
-    // $rimplenet_wallet_tranfer_amount = sanitize_text_field($_POST["rimplenet_wallet_tranfer_amount"]);
-    // $rimplenet_wallet_transfer_destination = sanitize_text_field($_POST["rimplenet_wallet_transfer_destination"]);
-    // $rimplenet_transfer_note = sanitize_text_field($_POST["rimplenet_transfer_note"]);
-
-    // $note = $rimplenet_transfer_note;
-    // $user_id = $current_user->ID;
+    $user_id = $current_user->ID;
 
 
     $data['skr'] = sanitize_text_field($_POST["skr"]);
-    $data['item'] = sanitize_text_field($_POST["item_title"]);
+    $data['item'] = sanitize_text_field($_POST["item_name"]);
     $data['description'] = sanitize_text_field($_POST["description"]);
+    $data['item_type'] = sanitize_text_field($_POST["item_type"]);
+    $data['duration'] = sanitize_text_field($_POST["duration"]);
 
-    $response = $this->addItem($data);
+    $response = $this->addItem($user_id, $data);
     if ($response['status'] == "success") {
         $success_message = 'Item Added Successfully';
         do_action('rimplenet_wallet_transfer_request_success', $transfer_info, $current_user, $wallet_id, $rimplenet_wallet_tranfer_amount, $rimplenet_wallet_transfer_destination, $note);
@@ -54,7 +50,7 @@ if (wp_verify_nonce($_POST['vault_add_item_nonce'], 'vault_add_item_nonce')) {
     <center>
         <div class="card">
             <div class="card-header card-header-primary">
-                TRANSFER
+                Add Valuable Item
             </div>
             <div class="card-body">
                 <br>
@@ -108,7 +104,7 @@ if (wp_verify_nonce($_POST['vault_add_item_nonce'], 'vault_add_item_nonce')) {
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="rimplenet_wallet_tranfer_amount"> Item Name</label>
-                            <input type="text" class="form-control" name="item_name" id="item_name" placeholder="e.g Abc12345678 , no space, comma, currency sign or special character" required>
+                            <input type="text" class="form-control" name="item_name" id="item_name" placeholder="Item" required>
                         </div>
                     </div>
 
@@ -142,7 +138,7 @@ if (wp_verify_nonce($_POST['vault_add_item_nonce'], 'vault_add_item_nonce')) {
 
                     <div class="form-row">
                         <div class="form-group col-md-6">
-                            <label for="rimplenet_wallet_tranfer_amount">Asset Type</label>
+                            <label for="rimplenet_wallet_tranfer_amount">Duration</label>
                             <!-- <input type="text" class="form-control" name="item_name" id="item_name" > -->
                             <select name="item_type">
                                 <option value="volvo">1 week</option>

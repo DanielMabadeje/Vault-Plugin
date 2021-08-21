@@ -67,8 +67,17 @@ class AddItem
                 'duration'=>$data['duration'],
               ),
             );
-        wp_insert_post($new_txn_args);
+        $post=wp_insert_post($new_txn_args);
+        
+        if ($post) {
+            wp_reset_postdata();
 
-        wp_reset_postdata();
+            return[
+                "status"=>"success",
+            ];
+        } else {
+            return ["status"=>"fail",
+            "message"=>"something went wrong",];
+        } 
     }
 }
