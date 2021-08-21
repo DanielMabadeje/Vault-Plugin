@@ -6,22 +6,22 @@
  * @link       https://bunnyviolablue.com
  * @since      1.0.0
  *
- * @package    Rimplenet_Mlm
- * @subpackage Rimplenet_Mlm/includes
+ * @package    Vault
+ * @subpackage Vault/includes
  */
 
 /**
  * Register Postype
  *
- * @package    Rimplenet_Mlm
- * @subpackage Rimplenet_Mlm/includes
+ * @package    Vault
+ * @subpackage Vault/includes
  * @author     Tech Celebrity <techcelebrity@bunnyviolablue.com>
  */
 
 namespace PostType;
  
 /**
- * Class Rimplenet_General_Acts
+ * Class Vault_General_Acts
  * @package PostType
  *
  * Use actual name of post type for
