@@ -69,34 +69,24 @@ $user_id = $atts['user_id'];
  <form action="" method="post">
   <div class="form-row">
     <div class="form-group col-md-6">
-      <label for="rimplenet_wallet_tranfer_amount"> Amount to Transfer</label>
-      <input type="text" class="form-control" name="rimplenet_wallet_tranfer_amount" id="rimplenet_wallet_tranfer_amount" placeholder="e.g 1000 , no space, comma, currency sign or special character" required>
+      <label for="rimplenet_wallet_tranfer_amount"> SKR</label>
+      <input type="text" class="form-control" name="skr" id="skr" placeholder="e.g Abc12345678 , no space, comma, currency sign or special character" required>
     </div>
+
+
+  </div>
+
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="rimplenet_wallet_tranfer_amount"> Item Name</label>
+      <input type="text" class="form-control" name="skr" id="skr" placeholder="e.g Abc12345678 , no space, comma, currency sign or special character" required>
+    </div>
+
+    
   </div>
  
-  <?php 
-//   $placeholder_text = apply_filters( 'rimplenet_wallet_transfer_destination', $wallet_id, $user_id ,'E.g Username' );
-  ?> 
-  <div class="form-row rimplenet_wallet_transfer_destination">
-    <div class="form-group col-md-12">
-
-      <label for="rimplenet_wallet_transfer_destination"> Username</label>
-      <input type="text" class="form-control" name="rimplenet_wallet_transfer_destination" id="rimplenet_wallet_transfer_destination" placeholder="e.g doe" required>
-    
-    </div>
-  </div>
-  
-  <div class="form-row rimplenet_transfer_note">
-    <div class="form-group col-md-12">
-    <label for="rimplenet_transfer_note">Transfer Note (optional) </label>
-    <textarea class="form-control" name="rimplenet_transfer_note" id="rimplenet_transfer_note" rows="3" placeholder="Leave transfer note here"></textarea>
-    </div>
-  </div>
-  
-  
-  <?php 
-//   wp_nonce_field( 'rimplenet_wallet_transfer_nonce', 'rimplenet_wallet_transfer_nonce' ); ?>
-  <button type="submit" class="btn btn-primary">TRANSFER</button>
+ 
+  <button type="submit" class="btn btn-primary">Add Item</button>
 </form>
 </div>
 </div>
