@@ -15,7 +15,10 @@
 
 
 
-    <?php } else { ?>
+    <?php } else {
+        $ski=$_GET['SKI'];
+
+        ?>
 
         <?php if (!empty($pageno) or $_GET['pageno'] > 1) {
             $pageno = sanitize_text_field($_GET['pageno']);
@@ -26,6 +29,7 @@
         $meta_query = array(
             array(
                 'key'     => 'SKI',
+                'value'=>$ski,
                 'compare' => 'EXISTS',
             ),
         );
