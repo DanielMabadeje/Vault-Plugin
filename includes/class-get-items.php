@@ -4,7 +4,7 @@ class GetItems
 
     public function __construct()
     {
-        # code...
+        add_shortcode('vault-get-items', array($this, 'showGetItems'));
     }
 
     public function getItemsBySKI()

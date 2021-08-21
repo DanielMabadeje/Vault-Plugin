@@ -7,11 +7,15 @@ class UserRegistration
     public function __construct()
     {
         add_action('register_form', array($this, 'crf_registration_form'));
+        // add_action('login_init', array($this, 'yourloginoverrides'));
         // add_shortcode('vault_user_registration', array($this, 'showRegistrationForm'));
 
         if ($_SERVER['REQUEST_METHOD'] == "POST"  && $_GET['action'] == "register") {
+
+            $this->sanitizePost();
             $this->postdata = $_POST;
 
+            // add_action('login_init', array($this, 'addUser'));
             if ($user_data = $this->addUser($this->postdata)) {
                 echo "<script>alert('Your SKI is" . $user_data . "')</script>";
             } else {
@@ -35,9 +39,29 @@ class UserRegistration
     public function addUser($data)
     {
         // $user_id = email_exists($data['user_email']);
-        $user_id = false;
-        if (!$user_id) {
-            $user_id = wp_create_user($data['user_login'], $data['password'], $data['user_email']);
+        // $user_id = false;
+        if ($user_id=true) {
+            
+            global $wpdb;
+            $user_id = wp_insert_user( array(
+                'user_login' => $data['user_login'],
+                'user_pass' => $data['password'],
+                'user_email' => $data['user_email'],
+                'first_name' => 'Jane',
+                'last_name' => 'Doe',
+                'display_name' => 'Jane Doe',
+                'role' => 'editor'
+              ));
+            // $user_id = wp_create_user($data['user_login'], $data['password'], $data['user_email']);
+            if (is_wp_error($user_id)) {
+                $error = $user_id->get_error_message();
+                //handle error here
+            } else {
+                var_dump($user_id);
+                // $user = get_user_by('ID', $user_id);
+                //handle successful creation here
+            }
+            // $user_id = wp_insert_user($data['user_login'], $data['password'], $data['user_email']);
             $this->generateSKI();
             $this->crf_user_register($user_id, "SKI", $this->uniqueSKI);
 
@@ -127,5 +151,14 @@ class UserRegistration
             </label>
         </p>
 <?php
+    }
+
+    public function sanitizePost(Type $var = null)
+    {
+        $_POST['username']   =   sanitize_user( $_POST['user_login'] );
+        $_POST['user_pass']   =   esc_attr( $_POST['user_pass'] );
+        $_POST['user_email']   =   sanitize_email( $_POST['user_email'] );
+        // $first_name =   sanitize_text_field( $_POST['fname'] );
+        // $last_name  =   sanitize_text_field( $_POST['lname'] );
     }
 }
