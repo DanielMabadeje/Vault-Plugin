@@ -50,8 +50,24 @@ class AddItem
     }
 
 
-    public function addItem(array $data)
+    public function addItem($user_id, array $data)
     {
+
+        $user_info = get_user_by('ID', $user_id);
+        $new_txn_args = array(
+            'post_author'=> $user_info->ID,
+            'post_type' => 'rimplenettransaction',
+            'post_title'    => wp_strip_all_tags($post_title),
+            'post_content'  => $post_content,
+            'post_status'   => $status,
+            'meta_input' => array(
+              'amount'=>$amount,
+              'currency'=>strtolower($wallet_id),
+              'txn_type'=>$tnx_type
+              ),
+            );
         // wp_insert_post( array $data);
+
+        wp_reset_postdata();
     }
 }
