@@ -144,6 +144,7 @@ class Vault_Plugin
 
 		new UserRegistration();
 		new AddItem();
+		new GetItems();
 		$this->loader = new Vault_Plugin_Loader();
 	}
 
