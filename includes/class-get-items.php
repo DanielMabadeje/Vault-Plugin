@@ -11,4 +11,9 @@ class GetItems
     {
         # code...
     }
+
+    public function showGetItems()
+    {
+        # code...
+    }
 }
