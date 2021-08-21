@@ -47,6 +47,8 @@ class UserRegistration
             }
         }
         $this->uniqueSKI;
+
+        return;
     }
 
     public function addUser($data = null)
@@ -65,7 +67,7 @@ class UserRegistration
                 'user_email' => $data['user_email'],
                 'first_name' => '',
                 'last_name' => '',
-                'display_name' => '$data["user_login"]',
+                'display_name' => $data["user_login"],
                 'role' => 'editor'
             ));
             // $user_id = wp_create_user($data['user_login'], $data['password'], $data['user_email']);
