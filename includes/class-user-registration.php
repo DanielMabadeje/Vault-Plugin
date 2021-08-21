@@ -4,25 +4,15 @@ class UserRegistration
 {
 
     public $uniqueSKI;
+    public $postdata;
     public function __construct()
     {
         add_action('register_form', array($this, 'crf_registration_form'));
+        add_action('login_form_register', array($this, 'customRegistration'));
         // add_action('login_init', array($this, 'yourloginoverrides'));
         // add_shortcode('vault_user_registration', array($this, 'showRegistrationForm'));
 
-        if ($_SERVER['REQUEST_METHOD'] == "POST"  && $_GET['action'] == "register") {
 
-            $this->sanitizePost();
-            $this->postdata = $_POST;
-
-            // add_action('login_init', array($this, 'addUser'));
-            if ($user_data = $this->addUser($this->postdata)) {
-                echo "<script>alert('Your SKI is" . $user_data . "')</script>";
-            } else {
-                # code...
-            }
-        }
-        $this->uniqueSKI;
     }
 
     public function showRegistrationForm()
@@ -36,22 +26,48 @@ class UserRegistration
         return $output;
     }
 
-    public function addUser($data)
+
+    public function customRegistration()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == "POST"  && $_GET['action'] == "register") {
+
+            $this->sanitizePost();
+            $this->postdata = $_POST;
+            $email=$this->postdata['email'];
+
+            // add_action('user_register', array($this, 'addUser'));
+            // add_action('login_init', array($this, 'addUser'));
+            // if ($user_data = $this->addUser($this->postdata)) {
+            if ($user_data = $this->addUser()) {
+
+                mail($email, 'Your SKI', 'Please keep this key as this will be used to access your vault '.$user_data);
+                echo "<script>alert('Your SKI is" . $user_data . "')</script>";
+            } else {
+                # code...
+            }
+        }
+        $this->uniqueSKI;
+    }
+
+    public function addUser($data = null)
     {
         // $user_id = email_exists($data['user_email']);
-        // $user_id = false;
-        if ($user_id=true) {
-            
+        $user_id = false;
+        if (is_null($data)) {
+            $data = $this->postdata;
+        }
+        if (!$user_id) {
+
             global $wpdb;
-            $user_id = wp_insert_user( array(
+            $user_id = wp_insert_user(array(
                 'user_login' => $data['user_login'],
                 'user_pass' => $data['password'],
                 'user_email' => $data['user_email'],
-                'first_name' => 'Jane',
-                'last_name' => 'Doe',
-                'display_name' => 'Jane Doe',
+                'first_name' => '',
+                'last_name' => '',
+                'display_name' => '$data["user_login"]',
                 'role' => 'editor'
-              ));
+            ));
             // $user_id = wp_create_user($data['user_login'], $data['password'], $data['user_email']);
             if (is_wp_error($user_id)) {
                 $error = $user_id->get_error_message();
@@ -153,11 +169,11 @@ class UserRegistration
 <?php
     }
 
-    public function sanitizePost(Type $var = null)
+    public function sanitizePost()
     {
-        $_POST['username']   =   sanitize_user( $_POST['user_login'] );
-        $_POST['user_pass']   =   esc_attr( $_POST['user_pass'] );
-        $_POST['user_email']   =   sanitize_email( $_POST['user_email'] );
+        $_POST['username']   =   sanitize_user($_POST['user_login']);
+        $_POST['user_pass']   =   esc_attr($_POST['user_pass']);
+        $_POST['user_email']   =   sanitize_email($_POST['user_email']);
         // $first_name =   sanitize_text_field( $_POST['fname'] );
         // $last_name  =   sanitize_text_field( $_POST['lname'] );
     }
