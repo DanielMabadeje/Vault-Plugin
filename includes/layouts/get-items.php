@@ -1,12 +1,12 @@
 <body>
 
-    <?php if ($_SERVER['REQUEST_METHOD'] == "GET" && !$_GET['SKI']) { ?>
+    <?php if ($_SERVER['REQUEST_METHOD'] == "GET" && !$_GET['skr']) { ?>
 
         <section>
             <div class="form">
                 <form action="" method="GET">
                     <div class="form-input">
-                        <input type="text" placeholder="Type your SKI here..." name="SKI">
+                        <input type="text" placeholder="Type your SKI here..." name="skr">
                     </div>
                 </form>
             </div>
@@ -16,7 +16,7 @@
 
 
     <?php } else {
-        $ski=$_GET['SKI'];
+        $skr=$_GET['skr'];
 
         ?>
 
@@ -28,8 +28,8 @@
 
         $meta_query = array(
             array(
-                'key'     => 'SKI',
-                'value'=>$ski,
+                'key'     => 'skr',
+                'value'=>$skr,
                 'compare' => 'EXISTS',
             ),
         );
@@ -52,13 +52,14 @@
 
         if ($items->have_posts()) {
         ?>
+        
+        <section>
+                    <div class="container d-flex justify-content-center">
             <?php
             while ($items->have_posts()) {
 
 
             ?>
-                <section>
-                    <div class="container d-flex justify-content-center">
                         <figure class="card card-product-grid card-lg"> <a href="#" class="img-wrap" data-abc="true"> <img src="https://i.imgur.com/MPqUt62.jpg"> </a>
                             <figcaption class="info-wrap">
                                 <div class="row">
@@ -82,11 +83,15 @@
                                 <div class="price-wrap"> <a href="#" class="btn btn-warning float-left" data-abc="true"> Cancel </a> </div>
                             </div>
                         </figure>
-                    </div>
-                </section>
+                  
+            <?php };?>
 
-            <?php };
-        } else {
+</div>
+</section>
+
+
+<?php
+        }  else {
             ?>
             <section>
                 <div class="card p-5 border-none">
