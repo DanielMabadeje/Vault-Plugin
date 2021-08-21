@@ -142,6 +142,7 @@ class Vault_Plugin
 		 */
 		require_once plugin_dir_path(dirname(__FILE__)) . 'public/class-vault-plugin-public.php';
 
+		new UserRegistration();
 		$this->loader = new Vault_Plugin_Loader();
 	}
 
