@@ -48,7 +48,7 @@ if (wp_verify_nonce($_POST['vault_add_item_nonce'], 'vault_add_item_nonce')) {
           'size'     => $files['photo']['size'][$no]
         );
 
-        $data['files'][$no]=wp_handle_upload($file, array('test_form' => FALSE))
+        $data['files'][$no]=wp_handle_upload($file, array('test_form' => FALSE));
         // $data['files'][$no]=$files_array['url'];
         // var_dump($file);
         // wp_handle_upload($file);
@@ -62,7 +62,7 @@ if (wp_verify_nonce($_POST['vault_add_item_nonce'], 'vault_add_item_nonce')) {
       $no++;
     }
 
-    return;
+    // return;
     $response = $this->addItem($user_id, $data);
     if ($response['status'] == "success") {
         $success_message = 'Item Added Successfully';
