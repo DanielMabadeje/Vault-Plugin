@@ -35,6 +35,7 @@ class UserRegistration
             $this->postdata = $_POST;
             $email = $this->postdata['email'];
 
+            add_filter( 'wpmu_signup_user_notification', '__return_true' );
             // add_action('user_register', array($this, 'addUser'));
             // add_action('login_init', array($this, 'addUser'));
             // if ($user_data = $this->addUser($this->postdata)) {
