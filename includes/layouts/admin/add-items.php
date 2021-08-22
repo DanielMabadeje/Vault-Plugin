@@ -141,12 +141,12 @@ if (wp_verify_nonce($_POST['vault_add_item_nonce'], 'vault_add_item_nonce')) {
                             <label for="rimplenet_wallet_tranfer_amount">Duration</label>
                             <!-- <input type="text" class="form-control" name="item_name" id="item_name" > -->
                             <select name="item_type">
-                                <option value="volvo">1 week</option>
-                                <option value="saab">2 weeks</option>
-                                <option value="fiat">3 Weeks</option>
-                                <option value="audi">4 Weeks</option>
-                                <option value="audi">1 Month</option>
-                                <option value="audi">1 Month - 3 Months</option>
+                                <option value="1 week">1 week</option>
+                                <option value="2 weeks">2 weeks</option>
+                                <option value="3 Weeks">3 Weeks</option>
+                                <option value="4 Weeks">4 Weeks</option>
+                                <option value="1 Month">1 Month</option>
+                                <option value="1 Month - 3 Months">1 Month - 3 Months</option>
                             </select>
                         </div>
                     </div>
