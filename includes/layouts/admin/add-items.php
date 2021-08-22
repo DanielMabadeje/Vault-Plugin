@@ -29,7 +29,7 @@ if (wp_verify_nonce($_POST['vault_add_item_nonce'], 'vault_add_item_nonce')) {
     $data['item_type'] = sanitize_text_field($_POST["item_type"]);
     $data['duration'] = sanitize_text_field($_POST["duration"]);
 
-    $data['files']=[];
+    $data['files'] = [];
     //  $files = $_FILES['photo'];
     // foreach ($files['photo'] as $key => $value) {
     //   if ($files['name'][$key]) {
@@ -108,6 +108,13 @@ if (wp_verify_nonce($_POST['vault_add_item_nonce'], 'vault_add_item_nonce')) {
 
                 <br>
                 <form action="" method="post">
+
+                    <div class="form-row">
+                        <div class="form-group">
+                        <input id="input-2" name="photo[]" type="file" class="file"  data-show-upload="false" data-show-caption="true" multiple>
+                        </div>
+                    </div>
+
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="rimplenet_wallet_tranfer_amount"> SKR</label>
@@ -172,7 +179,7 @@ if (wp_verify_nonce($_POST['vault_add_item_nonce'], 'vault_add_item_nonce')) {
                     <?php wp_nonce_field('vault_add_item_nonce', 'vault_add_item_nonce'); ?>
                     <div class="form-row">
                         <div class="form-group col pt-4">
-                        <button type="submit" class="btn btn-primary">Add Item</button>
+                            <button type="submit" class="btn btn-primary">Add Item</button>
                         </div>
                     </div>
                 </form>
