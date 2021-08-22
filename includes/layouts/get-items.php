@@ -69,11 +69,12 @@
                         $duration = get_post_meta($item_id, 'duration', true);
                         $skr = get_post_meta($item_id, 'skr', true);
                         $item_type = get_post_meta($item_id, 'item_type', true);
+                        $images=get_post_meta($item_id, 'item_image', true);
                         
-                        // var_dump($items->title);
+                        // var_dump($images);
 
                     ?>
-                        <figure class="card card-product-grid card-lg"> <a href="#" class="img-wrap" data-abc="true"> <img src="https://i.imgur.com/MPqUt62.jpg"> </a>
+                        <figure class="card card-product-grid card-lg"> <a href="#" class="img-wrap" data-abc="true"> <img src="<?= $images ?>"> </a>
                             <figcaption class="info-wrap">
                                 <div class="row">
                                     <div class="col-md-9 col-xs-9"> <span class="rated"><?= $title ?></span> </div>

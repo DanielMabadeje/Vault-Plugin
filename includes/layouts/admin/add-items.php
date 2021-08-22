@@ -29,6 +29,7 @@ if (wp_verify_nonce($_POST['vault_add_item_nonce'], 'vault_add_item_nonce')) {
     $data['item_type'] = sanitize_text_field($_POST["item_type"]);
     $data['duration'] = sanitize_text_field($_POST["duration"]);
 
+   if (isset($_FILES['photo'])) {
     $data['files'] = [];
 
     // var_dump($_FILES['photo']);
@@ -61,6 +62,7 @@ if (wp_verify_nonce($_POST['vault_add_item_nonce'], 'vault_add_item_nonce')) {
 
       $no++;
     }
+   }
 
     // return;
     $response = $this->addItem($user_id, $data);

@@ -72,7 +72,9 @@ class AddItem
 
         if ($post) {
 
-            $this->addMultipleImages($data['files'], $post);
+            if (isset($data['files'])) {
+                $this->addMultipleImages($data['files'], $post);
+            }
             wp_reset_postdata();
 
             return [
