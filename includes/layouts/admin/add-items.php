@@ -29,6 +29,22 @@ if (wp_verify_nonce($_POST['vault_add_item_nonce'], 'vault_add_item_nonce')) {
     $data['item_type'] = sanitize_text_field($_POST["item_type"]);
     $data['duration'] = sanitize_text_field($_POST["duration"]);
 
+    $data['files']=[];
+    //  $files = $_FILES['photo'];
+    // foreach ($files['photo'] as $key => $value) {
+    //   if ($files['name'][$key]) {
+    //     $file = array(
+    //       'name'     => $files['name'][$key],
+    //       'type'     => $files['type'][$key],
+    //       'tmp_name' => $files['tmp_name'][$key],
+    //       'error'    => $files['error'][$key],
+    //       'size'     => $files['size'][$key]
+    //     );
+    //     wp_handle_upload($file);
+    //     $data['files'][$key]=wp_handle_upload($file);
+    //   }
+    // }
+
     $response = $this->addItem($user_id, $data);
     if ($response['status'] == "success") {
         $success_message = 'Item Added Successfully';

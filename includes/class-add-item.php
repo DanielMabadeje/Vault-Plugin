@@ -68,8 +68,11 @@ class AddItem
             ),
         );
         $post = wp_insert_post($new_txn_args);
+        
 
         if ($post) {
+
+            $this->addMultipleImages($data['image'], $post);
             wp_reset_postdata();
 
             return [
@@ -97,5 +100,14 @@ class AddItem
          } else {
              return false;
          }
+    }
+
+    public function addMultipleImages(Array $files, $post_id)
+    {
+        $meta_key="item_image";
+        foreach ($files as $key => $value) {
+            add_post_meta($post_id, $meta_key, $value, false);
+        }
+        return true;
     }
 }
