@@ -106,7 +106,7 @@ class AddItem
     {
         $meta_key="item_image";
         foreach ($files as $key => $value) {
-            add_post_meta($post_id, $meta_key, $value['URL'], false);
+            add_post_meta($post_id, $meta_key, $value['url'], false);
         }
         return true;
     }

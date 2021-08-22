@@ -33,20 +33,33 @@ if (wp_verify_nonce($_POST['vault_add_item_nonce'], 'vault_add_item_nonce')) {
 
     // var_dump($_FILES['photo']);
      $files['photo'] = $_FILES['photo'];
+
+    //  var_dump($files);
+    //  echo "<br>";
+     $no=0;
     foreach ($files['photo'] as $key => $value) {
-      if ($files['name'][$key]) {
+
+      if ($files['photo']['name'][$no]) {
         $file = array(
-          'name'     => $files['name'][$key],
-          'type'     => $files['type'][$key],
-          'tmp_name' => $files['tmp_name'][$key],
-          'error'    => $files['error'][$key],
-          'size'     => $files['size'][$key]
+          'name'     => $files['photo']['name'][$no],
+          'type'     => $files['photo']['type'][$no],
+          'tmp_name' => $files['photo']['tmp_name'][$no],
+          'error'    => $files['photo']['error'][$no],
+          'size'     => $files['photo']['size'][$no]
         );
+
+        $data['files'][$no]=wp_handle_upload($file, array('test_form' => FALSE))
+        // $data['files'][$no]=$files_array['url'];
+        // var_dump($file);
         // wp_handle_upload($file);
-        // $data['files'][$key]=wp_handle_upload($file);
-        echo "<br>";
-        var_dump(wp_handle_upload($file));
+        // $data['files'][$no]=wp_handle_upload($file);
+        // echo "<br>";
+        // var_dump(wp_handle_upload($file, array('test_form' => FALSE)));
+      }else{
+        //   echo "here";
       }
+
+      $no++;
     }
 
     return;
