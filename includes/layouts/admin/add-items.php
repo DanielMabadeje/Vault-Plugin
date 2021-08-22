@@ -138,7 +138,7 @@ if (wp_verify_nonce($_POST['vault_add_item_nonce'], 'vault_add_item_nonce')) {
 
                     <div class="form-row">
                         <div class="form-group col-md-6">
-                            <label for="rimplenet_wallet_tranfer_amount">Duration</label>
+                            <label for="">Duration</label>
                             <!-- <input type="text" class="form-control" name="item_name" id="item_name" > -->
                             <select name="item_type">
                                 <option value="1 week">1 week</option>
@@ -154,7 +154,11 @@ if (wp_verify_nonce($_POST['vault_add_item_nonce'], 'vault_add_item_nonce')) {
 
 
                     <?php wp_nonce_field('vault_add_item_nonce', 'vault_add_item_nonce'); ?>
-                    <button type="submit" class="btn btn-primary">Add Item</button>
+                    <div class="form-row">
+                        <div class="form-group col pt-4">
+                        <button type="submit" class="btn btn-primary">Add Item</button>
+                        </div>
+                    </div>
                 </form>
             </div>
         </div>
