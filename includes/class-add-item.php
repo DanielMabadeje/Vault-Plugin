@@ -83,8 +83,19 @@ class AddItem
         }
     }
 
-    public function validateSKR(Type $var = null)
+    public function validateSKR($skr)
     {
-        # code...
+        $users = get_users(array(
+            'meta_key'     => 'skr',
+            'meta_value'   => $skr,
+             
+         ));
+
+         if ($users) {
+
+             return true;
+         } else {
+             return false;
+         }
     }
 }
