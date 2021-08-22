@@ -65,8 +65,8 @@
                         $item_id = get_the_ID();
 
 
-                        $amount = get_post_meta($txn_id, 'amount', true);
-                        $txn_type = get_post_meta($txn_id, 'txn_type', true);
+                        $amount = get_post_meta($item_id, 'amount', true);
+                        $item_type = get_post_meta($item_id, 'item_type', true);
                         
 
                     ?>
