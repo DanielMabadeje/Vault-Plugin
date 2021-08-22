@@ -30,21 +30,26 @@ if (wp_verify_nonce($_POST['vault_add_item_nonce'], 'vault_add_item_nonce')) {
     $data['duration'] = sanitize_text_field($_POST["duration"]);
 
     $data['files'] = [];
-    //  $files = $_FILES['photo'];
-    // foreach ($files['photo'] as $key => $value) {
-    //   if ($files['name'][$key]) {
-    //     $file = array(
-    //       'name'     => $files['name'][$key],
-    //       'type'     => $files['type'][$key],
-    //       'tmp_name' => $files['tmp_name'][$key],
-    //       'error'    => $files['error'][$key],
-    //       'size'     => $files['size'][$key]
-    //     );
-    //     wp_handle_upload($file);
-    //     $data['files'][$key]=wp_handle_upload($file);
-    //   }
-    // }
 
+    // var_dump($_FILES['photo']);
+     $files['photo'] = $_FILES['photo'];
+    foreach ($files['photo'] as $key => $value) {
+      if ($files['name'][$key]) {
+        $file = array(
+          'name'     => $files['name'][$key],
+          'type'     => $files['type'][$key],
+          'tmp_name' => $files['tmp_name'][$key],
+          'error'    => $files['error'][$key],
+          'size'     => $files['size'][$key]
+        );
+        // wp_handle_upload($file);
+        // $data['files'][$key]=wp_handle_upload($file);
+        echo "<br>";
+        var_dump(wp_handle_upload($file));
+      }
+    }
+
+    return;
     $response = $this->addItem($user_id, $data);
     if ($response['status'] == "success") {
         $success_message = 'Item Added Successfully';
@@ -107,7 +112,7 @@ if (wp_verify_nonce($_POST['vault_add_item_nonce'], 'vault_add_item_nonce')) {
                 ?>
 
                 <br>
-                <form action="" method="post">
+                <form action="" method="post" enctype='multipart/form-data'>
 
                     <div class="form-row">
                         <div class="form-group">
