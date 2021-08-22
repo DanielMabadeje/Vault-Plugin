@@ -33,14 +33,14 @@ class UserRegistration
 
             $this->sanitizePost();
             $this->postdata = $_POST;
-            $email=$this->postdata['email'];
+            $email = $this->postdata['email'];
 
             // add_action('user_register', array($this, 'addUser'));
             // add_action('login_init', array($this, 'addUser'));
             // if ($user_data = $this->addUser($this->postdata)) {
             if ($user_data = $this->addUser()) {
 
-                mail($email, 'Your SKI', 'Please keep this key as this will be used to access your vault '.$user_data);
+                mail($email, 'Your SKI', 'Please keep this key as this will be used to access your vault ' . $user_data);
                 echo "<script>alert('Your SKI is" . $user_data . "')</script>";
             } else {
                 # code...
@@ -53,8 +53,8 @@ class UserRegistration
 
     public function addUser($data = null)
     {
-        // $user_id = email_exists($data['user_email']);
-        $user_id = false;
+        $user_id = email_exists($data['user_email']);
+        // $user_id = false;
         if (is_null($data)) {
             $data = $this->postdata;
         }

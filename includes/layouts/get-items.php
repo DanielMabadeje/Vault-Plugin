@@ -16,9 +16,9 @@
 
 
     <?php } else {
-        $skr=$_GET['skr'];
+        $skr = $_GET['skr'];
 
-        ?>
+    ?>
 
         <?php if (!empty($pageno) or $_GET['pageno'] > 1) {
             $pageno = sanitize_text_field($_GET['pageno']);
@@ -29,7 +29,7 @@
         $meta_query = array(
             array(
                 'key'     => 'skr',
-                'value'=>$skr,
+                'value' => $skr,
                 'compare' => 'EXISTS',
             ),
         );
@@ -51,15 +51,25 @@
         );
 
         if ($items->have_posts()) {
+
+            // var_dump($items->have_posts());
+            // die;
         ?>
-        
-        <section>
-                    <div class="container d-flex justify-content-center">
-            <?php
-            while ($items->have_posts()) {
+
+            <section>
+                <div class="container d-flex justify-content-center">
+                    <?php
+                    while ($items->have_posts()) {
+
+                        $items->the_post();
+                        $item_id = get_the_ID();
 
 
-            ?>
+                        $amount = get_post_meta($txn_id, 'amount', true);
+                        $txn_type = get_post_meta($txn_id, 'txn_type', true);
+                        
+
+                    ?>
                         <figure class="card card-product-grid card-lg"> <a href="#" class="img-wrap" data-abc="true"> <img src="https://i.imgur.com/MPqUt62.jpg"> </a>
                             <figcaption class="info-wrap">
                                 <div class="row">
@@ -83,16 +93,18 @@
                                 <div class="price-wrap"> <a href="#" class="btn btn-warning float-left" data-abc="true"> Cancel </a> </div>
                             </div>
                         </figure>
-                  
-            <?php };?>
 
-</div>
-</section>
+                        <!-- gh -->
+
+                    <?php }; ?>
+
+                </div>
+            </section>
 
 
-<?php
-        }  else {
-            ?>
+        <?php
+        } else {
+        ?>
             <section>
                 <div class="card p-5 border-none">
                     <div class="card-body">
@@ -103,6 +115,8 @@
             </section>
         <?php
         }
+
+        wp_reset_postdata();
         ?>
 
 
