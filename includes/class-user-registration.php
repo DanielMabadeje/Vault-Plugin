@@ -113,7 +113,7 @@ class UserRegistration
         return $uniqueId;
     }
 
-    public function validateSKI($ski)
+    public function validateSKI($skr)
     {
 
         // $ski=esc_html( get_the_author_meta( 'year_of_birth', $user->ID ) )
@@ -123,6 +123,19 @@ class UserRegistration
         // } else {
         //     return false;
         // }
+
+        $users = get_users(array(
+            'meta_key'     => 'skr',
+            'meta_value'   => $skr,
+             
+         ));
+
+         if ($users) {
+
+             return true;
+         } else {
+             return false;
+         }
 
         return false;
     }
