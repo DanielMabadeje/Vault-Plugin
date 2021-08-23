@@ -9,6 +9,7 @@ class UserRegistration
     {
         add_action('register_form', array($this, 'crf_registration_form'));
         add_action('login_form_register', array($this, 'customRegistration'));
+        // do_action( 'user_register', int $user_id, array $userdata )
         // add_action('login_init', array($this, 'yourloginoverrides'));
         // add_shortcode('vault_user_registration', array($this, 'showRegistrationForm'));
 
@@ -35,14 +36,22 @@ class UserRegistration
             $this->postdata = $_POST;
             $email = $this->postdata['email'];
 
-            add_filter( 'wpmu_signup_user_notification', '__return_true' );
+            add_filter('wpmu_signup_user_notification', '__return_true');
             // add_action('user_register', array($this, 'addUser'));
             // add_action('login_init', array($this, 'addUser'));
             // if ($user_data = $this->addUser($this->postdata)) {
             if ($user_data = $this->addUser()) {
 
+                global $wpdb;
+
+                $admin_email = get_option( 'admin_email' );
+
                 mail($email, 'Your SKI', 'Please keep this key as this will be used to access your vault ' . $user_data);
-                echo "<script>alert('Your SKI is" . $user_data . "')</script>";
+                mail($admin_email, "New User's SKI", "Please keep this key as this will be used to access your client's vault" . $user_data);
+                echo "<script>alert('Your SKI is " . $user_data . "');
+                window.location.href='wp-login.php';</script>";
+                // wp_redirect('wp-login.php');
+                return;
             } else {
                 # code...
             }
@@ -55,11 +64,12 @@ class UserRegistration
     public function addUser($data = null)
     {
         $user_id = email_exists($data['user_email']);
+        // $user_id=username_exists($data['user_login'])
         // $user_id = false;
         if (is_null($data)) {
             $data = $this->postdata;
         }
-        if (!$user_id) {
+        if (!$user_id && !username_exists($data['user_login'])) {
 
             global $wpdb;
             $user_id = wp_insert_user(array(
@@ -71,12 +81,16 @@ class UserRegistration
                 'display_name' => $data["user_login"],
                 'role' => 'editor'
             ));
-            // $user_id = wp_create_user($data['user_login'], $data['password'], $data['user_email']);
+            $user_id = wp_create_user($data['user_login'], $data['password'], $data['user_email']);
             if (is_wp_error($user_id)) {
                 $error = $user_id->get_error_message();
                 //handle error here
             } else {
-                var_dump($user_id);
+                $user = new WP_User($user_id);
+                $user->set_role('contributor');
+                //Redirect
+                // wp_redirect('URL_where_you_want_redirect');
+                // var_dump($user_id);
                 // $user = get_user_by('ID', $user_id);
                 //handle successful creation here
             }
@@ -116,26 +130,18 @@ class UserRegistration
     public function validateSKI($skr)
     {
 
-        // $ski=esc_html( get_the_author_meta( 'year_of_birth', $user->ID ) )
-
-        // if (condition) {
-        //     return true;
-        // } else {
-        //     return false;
-        // }
-
         $users = get_users(array(
             'meta_key'     => 'skr',
             'meta_value'   => $skr,
-             
-         ));
 
-         if ($users) {
+        ));
 
-             return true;
-         } else {
-             return false;
-         }
+        if ($users) {
+
+            return true;
+        } else {
+            return false;
+        }
 
         return false;
     }
